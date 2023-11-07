@@ -35,6 +35,11 @@ class PerplexityPipeline(FillMaskPipeline):
         # 1. create sequential mask
         model_inputs = self.tokenizer(input_text, return_tensors='pt')
         new_data, masked_lm_positions, masked_lm_labels = self.create_sequential_mask(model_inputs.data)
+
+        #
+        new_data=new_data.cuda()
+
+        #
         model_inputs.data = new_data
         labels = torch.tensor(masked_lm_labels)
 
